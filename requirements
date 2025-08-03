@@ -1,14 +1,13 @@
-fastapi
-unicodedata
- sys
- re
+sys
+re
 string
 pandas 
 torch
- numpy
+numpy
 json
 os
- transformers 
+ 
+transformers 
 AutoTokenizer
 AutoModelForSequenceClassification
 
