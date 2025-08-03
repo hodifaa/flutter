@@ -1,0 +1,45 @@
+# Prompt for Cloud Model: Flutter Expense Tracker App Entity Extraction Issue
+## App Context
+I'm developing a Flutter expense tracking app called "Nabd" that uses NLP models to extract transaction information from user text input. The app is designed to help users track their expenses and income by automatically categorizing transactions and extracting relevant information like amounts, dates, and currencies.
+
+## App Architecture
+- Frontend : Flutter mobile application with screens for transaction input, listing, and details
+- Backend : Python API that processes text using NLP models to extract entities
+- Entity Extraction : The app extracts entities like AMOUNT, CATEGORY, DATE, and CURRENCY from user text
+## Current Implementation
+1. User enters transaction text in natural language (e.g., "I spent 50 riyals on food yesterday")
+2. Text is sent to NLP model which returns:
+   - Category classification (e.g., "food")
+   - Entities (AMOUNT: "50", CURRENCY: "riyals", DATE: "yesterday")
+3. App creates a transaction with these extracted values
+## Current Issues
+### 1. String Amount Parsing Problem
+- When the model returns an AMOUNT entity as an integer (e.g., "50"), it works correctly
+- When the model returns an AMOUNT entity as a string (e.g., "fifty", "خمسون", or with text like "about 50"), the app fails to parse it and displays nothing
+### 2. Currency Handling Problem
+- The app currently hardcodes the currency symbol as "﷼" (Riyal) in some places
+- When the model returns a different currency (e.g., "dollars", "euros"), this information is not properly displayed
+## Required Behavior
+1. Amount Parsing : The app should be able to:
+   
+   - Parse numeric amounts ("50", "50.5")
+   - Handle textual amounts ("fifty", "خمسون")
+   - Extract numbers from mixed text ("about 50 riyals")
+   - Default to 0.0 only when no numeric value can be extracted
+2. Currency Handling : The app should:
+   
+   - Extract the currency entity exactly as returned by the model
+   - Store it in the transaction object
+   - Display the extracted currency instead of hardcoding "﷼"
+   - Only default to "﷼" when no currency is detected
+## Technical Details
+- The Transaction model has a nullable currency field
+- The app uses regex to clean and parse amount strings
+- The UI displays transactions in list items and detail screens
+## Request
+Please provide a solution that ensures:
+
+1. Robust parsing of amount entities in various formats (numeric, textual, mixed)
+2. Proper extraction and display of currency entities
+3. Graceful fallback to defaults when needed
+The solution should work within the Flutter/Dart environment and handle Arabic and English text inputs.
